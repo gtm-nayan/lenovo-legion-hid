@@ -150,7 +150,7 @@ impl Keyboard {
             let full_index = (zone_index * 3 + i as u8) as usize;
             self.current_state.rgb_values[full_index] = new_values[i];
         }
-        self.refresh();
+        // self.refresh();
     }
 
     pub fn set_colors_to(&mut self, new_values: &[u8; 12]) {
