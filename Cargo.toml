@@ -10,7 +10,7 @@ description = "A small libray meant to ease interfacing with the keyboard on som
 
 [lib]
 name = "lenovo_legion_hid"
-crate-type = ["dylib"]
+# crate-type = ["dylib"]
 
 [dependencies]
 thiserror = "1.0.30"
