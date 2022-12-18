@@ -36,16 +36,18 @@ impl Keyboard {
 		if !SPEED_RANGE.contains(&keyboard_state.speed) {
 			return Err("Speed is outside valid range (1-4)");
 		}
+
 		if !BRIGHTNESS_RANGE.contains(&keyboard_state.brightness) {
 			return Err("Brightness is outside valid range (1-2)");
 		}
+
 		let mut payload: [u8; 33] = [0; 33];
 		payload[0] = 0xcc;
 		payload[1] = 0x16;
 		payload[2] = 0x01;
 		payload[3] = keyboard_state.speed;
 		payload[4] = keyboard_state.brightness;
-		payload[5..(5 + 12)].copy_from_slice(&keyboard_state.rgb_values);
+		payload[5..17].copy_from_slice(&keyboard_state.rgb_values);
 
 		Ok(payload)
 	}
@@ -59,12 +61,6 @@ impl Keyboard {
 			Ok(_keyboard_hid) => {}
 			Err(err) => panic!("Sending feature report failed: {}", err),
 		};
-	}
-
-	pub fn set_speed(&mut self, speed: u8) {
-		let speed = speed.clamp(*SPEED_RANGE.start(), *SPEED_RANGE.end());
-		self.current_state.speed = speed;
-		self.refresh();
 	}
 
 	pub fn set_brightness(&mut self, brightness: u8) {
